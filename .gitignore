@@ -1,0 +1,6 @@
+.venv
+.env
+DS_Store
+vs_code
+node_modules
+__pycache__
