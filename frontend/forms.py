@@ -1,4 +1,15 @@
 from django.contrib.auth.forms import UserCreationForm
+from django import forms
+from .models import Post
+
+class NewPost(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'description']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'input', 'placeholder': 'A descriptive title...'}),
+            'description': forms.TextInput(attrs={'class': 'input mt-5', 'placeholder': 'A descriptive description...'}),
+        }
 
 class SignUpForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
