@@ -7,7 +7,6 @@ post_types = [(1, "Question"), (2, "Analysis"), (3, "Opinion"), (4, "Other")]
 # Create your models here.
 class User(AbstractUser):
     uuid = models.UUIDField(default=uuid4, unique=True, primary_key=True)
-    username = models.CharField(max_length=30)
     email = models.EmailField(unique=True)
     role = models.IntegerField(choices=roles, default=1)
     is_verified = models.BooleanField(default=False)
@@ -57,5 +56,13 @@ class Comment(models.Model):
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
     body = models.CharField(max_length=5000)
     endorsements = models.IntegerField(default=0)
-    modified_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class Poll(models.Model):
+    uuid = models.UUIDField(default=uuid4, unique=True, primary_key=True)
+    cycle_id = models.ForeignKey(Cycle, on_delete=models.CASCADE)
+    description = models.CharField(max_length=500)
+    start_time = models.DateTimeField(blank=True, null=True)
+    end_time = models.DateTimeField(blank=True, null=True)
+    is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
