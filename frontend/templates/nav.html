@@ -2,17 +2,16 @@
     {% load static %}
     <div class="flex flex-row gap-4">
         <a href="{% url 'index' %}"><img class="h-20 w-20" src="{% static 'assets/images/icon.png' %}"></a>
-        <a href="{% url 'index' %}"><img class="h-20" src="{% static 'assets/images/wide.png' %}"></a>
+        <a href="{% url 'index' %}"><img class="h-16 my-2" src="{% static 'assets/images/wide.png' %}"></a>
     </div>
 
     <div class="flex flex-wrap md:flex-row">
-        <ul class="flex flex-row items-center mt-2 p-4 text-2xl gap-4">
-            <li><a href="{% url 'articles' %}">Articles</a></li>
-            <li><a href="{% url 'topics' %}">Topics</a></li>
-            <li><a href="{% url 'contact' %}">Contact</a></li>
-            <li><a href="{% url 'profile' %}">Profile</a></li>
+        <ul class="flex flex-row items-center md:mr-4 gap-2">
+            <li class="btn text-xl"><a href="{% url 'articles' %}">Articles</a></li>
+            <li class="btn text-xl"><a href="{% url 'topics' %}">Topics</a></li>
+            <li class="btn text-xl"><a href="{% url 'profile' %}">Profile</a></li>
+            <li class="btn-outline text-xl"><a href="{% url 'contact' %}">Contact</a><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /><path d="m21.854 2.147-10.94 10.939" /></svg></li>
         </ul>
-        <a href="{% url 'index' %}"><img class="h-20 mx-4" src="{% static 'assets/images/arabic.png' %}"></a>
     </div>
 
 </div>

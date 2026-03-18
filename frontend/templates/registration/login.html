@@ -1,11 +1,60 @@
-{% extends 'base.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'assets/styles/output.css' %}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/images/apple-touch-icon.png' %}">
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/images/favicon-32x32.png' %}">
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/favicon-16x16.png' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+<link rel="manifest" href="{% static 'assets/site.webmanifest' %}">
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.11/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.11/dist/js/sidebar.min.js" defer></script>
 
 {% block content %}
-<h2>Log In</h2>
+<div class="flex flex-col items-center justify-center mt-4 font-sans">
+    <div class="card w-8/10 md:w-1/2">
+        <header>
+            <h2>Login to your account</h2>
+            <p>Enter your details below to login</p>
+        </header>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Log In</button>
-</form>
+        <section>
+            <form method="post" action="{% url 'login' %}" id="login-form" class="form grid gap-6">
+                {% csrf_token %}
+
+                <div class="grid gap-2">
+                <label for="id_username">Username</label>
+                <input type="text" name="username" id="id_username" required>
+                {% if form.username.errors %}
+                    <p class="text-destructive text-sm">{{ form.username.errors|join:", " }}</p>
+                {% endif %}
+                </div>
+
+                <div class="grid gap-2">
+                    <div class="flex items-center gap-2">
+                        <label for="id_password">Password</label>
+                        <a href="{% url 'password_reset' %}" class="ml-auto text-sm underline-offset-4 hover:underline">
+                        Forgot password?
+                        </a>
+                    </div>
+                    <input type="password" name="password" id="id_password" required>
+                </div>
+
+                {% if form.non_field_errors %}
+                    <p class="text-destructive text-sm">{{ form.non_field_errors }}</p>
+                {% endif %}
+            </form>
+        </section>
+
+        <footer class="flex flex-col items-center gap-2">
+            <button type="submit" form="login-form" class="btn w-full">Login</button>
+            <p class="mt-4 text-center text-sm">
+                Don't have an account? <a href="{% url 'sign_up' %}" class="underline-offset-4 hover:underline">Sign up</a>
+            </p>
+        </footer>
+    </div>
+    <p class="mt-4 text-center text-sm">
+        <a href="{% url 'index' %}" class="underline-offset-4 hover:underline">Home</a>
+    </p>
+</div>
 {% endblock %}

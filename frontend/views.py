@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import StyledSignUpForm
+from .forms import SignUpForm
 
 def index(request):
     return render(request, 'index.html')
@@ -24,11 +24,12 @@ def profile(request):
 def sign_up(request):
     # Initially get the form to display for the user
     if request.method == "GET":
-        form = StyledSignUpForm()
+        form = SignUpForm()
         return render(request, "registration/sign_up.html", {"form": form})
+    
     # After user submits form, save the user and display a message
     if request.method == "POST":
-        form = StyledSignUpForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, "You have signed up for The Bilal successfully.")
