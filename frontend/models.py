@@ -8,10 +8,13 @@ post_types = [(1, "Question"), (2, "Analysis"), (3, "Opinion"), (4, "Other")]
 class User(AbstractUser):
     uuid = models.UUIDField(default=uuid4, unique=True, primary_key=True)
     email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
     role = models.IntegerField(choices=roles, default=1)
     is_verified = models.BooleanField(default=False)
     last_active = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    profile_picture = models.ImageField(null=True, blank=True, upload_to="profile_pictures/")
 
     def __str__(self):
         return self.username
@@ -29,6 +32,7 @@ class Topic(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(null=True, blank=True, upload_to="topic_images/")
     
 class Post(models.Model):
     uuid = models.UUIDField(default=uuid4, unique=True, primary_key=True)
@@ -39,6 +43,7 @@ class Post(models.Model):
     endorsements = models.IntegerField(default=0)
     post_type = models.IntegerField(choices=post_types, default=4)
     created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(null=True, blank=True, upload_to="post_images/")
 
 class Article(models.Model):
     uuid = models.UUIDField(default=uuid4, unique=True, primary_key=True)
@@ -49,6 +54,8 @@ class Article(models.Model):
     endorsements = models.IntegerField(default=0)
     modified_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    image_1 = models.ImageField(null=True, blank=True, upload_to="article_images/")
+    image_2 = models.ImageField(null=True, blank=True, upload_to="article_images/")
 
 class Comment(models.Model):
     uuid = models.UUIDField(default=uuid4, unique=True, primary_key=True)

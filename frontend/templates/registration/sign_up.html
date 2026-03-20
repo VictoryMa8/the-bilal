@@ -3,22 +3,101 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<div class="flex flex-col items-center">
-    <h2 class="text-2xl mt-4">Sign Up</h2>
+<div class="flex flex-col items-center justify-center mt-4 font-sans">
+  <div class="card w-8/10 md:w-1/2">
+    <header>
+      <h2>Sign up for an account</h2>
+      <p>Create your account below</p>
+    </header>
 
-    <form method="post">
+    <section>
+      <form method="post" action="{% url 'sign_up' %}" id="sign-up-form" class="form grid gap-6">
         {% csrf_token %}
-        {{ form.as_table }}
-        <button class="text-2xl bg-blue-600 text-white px-4 border-blue-900 border-2 mt-2 hover:bg-blue-300 hover:text-blue-900 hover:cursor-pointer w-40 text-center" type="submit">Sign Up</button>
-    </form>
-    {% endblock %}
 
-    {% if messages %}
-    <div>
+        {% if form.non_field_errors %}
+          <div class="grid gap-2">
+            {% for error in form.non_field_errors %}
+              <p class="text-destructive text-sm">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="grid gap-2">
+          <label for="id_username">Username</label>
+          <input type="text" name="username" id="id_username" placeholder="Enter a username" value="{{ form.username.value|default_if_none:'' }}" required>
+          {% if form.username.errors %}
+            <p class="text-destructive text-sm">{{ form.username.errors }}</p>
+          {% endif %}
+        </div>
+
+        <div class="grid gap-2">
+          <label for="id_first_name">First name</label>
+          <input type="text" name="first_name" id="id_first_name" value="{{ form.first_name.value|default_if_none:'' }}"  placeholder="Enter your first name" required>
+          {% if form.first_name.errors %}
+            <p class="text-destructive text-sm">{{ form.first_name.errors }}</p>
+          {% endif %}
+        </div>
+
+        <div class="grid gap-2">
+          <label for="id_last_name">Last name</label>
+          <input type="text" name="last_name" id="id_last_name" placeholder="Enter your last name" value="{{ form.last_name.value|default_if_none:'' }}" required>
+          {% if form.last_name.errors %}
+            <p class="text-destructive text-sm">{{ form.last_name.errors }}</p>
+          {% endif %}
+        </div>
+
+        <div class="grid gap-2">
+          <label for="id_email">Email</label>
+          <input type="email" name="email" id="id_email" value="{{ form.email.value|default_if_none:'' }}" placeholder="Enter a valid email" required>
+          {% if form.email.errors %}
+            <p class="text-destructive text-sm">{{ form.email.errors }}</p>
+          {% endif %}
+        </div>
+
+        <div class="grid gap-2">
+          <label for="id_password1">Password</label>
+          <input type="password" name="password1" id="id_password1" placeholder="Create a password" required>
+          {% if form.password1.errors %}
+            <p class="text-destructive text-sm">{{ form.password1.errors }}</p>
+          {% endif %}
+        </div>
+
+        <div class="grid gap-2">
+          <label for="id_password2">Confirm password</label>
+          <input type="password" name="password2" id="id_password2" placeholder="Repeat the password" required>
+          {% if form.password2.errors %}
+            <p class="text-destructive text-sm">{{ form.password2.errors }}</p>
+          {% endif %}
+        </div>
+      </form>
+    </section>
+
+    <footer class="flex flex-col items-center gap-2">
+      <button type="submit" form="sign-up-form" class="btn w-full">Create account</button>
+      <p class="mt-4 text-center text-sm">
+        Already have an account? <a href="{% url 'login' %}" class="underline-offset-4 hover:underline">Login</a>
+      </p>
+    </footer>
+  </div>
+
+  {% if messages %}
+    <div class="mt-4 text-center">
         {% for message in messages %}
-        <h1 class="text-2xl text-center font-bold">{{ message }}</h1>
-        {% endfor %}
+        <div class="alert-destructive">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <path d="m9 12 2 2 4-4" />
+            </svg>
+            <section>
+                {{ message }}
+            </section>
+        </div>
+      {% endfor %}
     </div>
+  {% endif %}
 
+  <p class="mt-4 text-center text-sm">
+    <a href="{% url 'index' %}" class="underline-offset-4 hover:underline">Home</a>
+  </p>
 </div>
-{% endif %}
+{% endblock %}
